@@ -323,9 +323,15 @@ class base_class{
         Everyone will inherit from this class
     */
 public:
-    base_class(){};
+    base_class(){}
     base_class(float) {throw not_implemented_exception();}
-    operator std::string() {throw not_implemented_exception();}
+
+    virtual operator string() const = 0;
+
+    bool operator<(const base_class &other) const { throw not_implemented_exception(); }
+
+    template <typename TemplateKlass>
+    void some_func(TemplateKlass temp) {throw not_implemented_exception();}
 }
 ```
 
@@ -338,9 +344,15 @@ class extended_class : public base_class{
 private:
     float m_temp;
 public:
-    extended_class(){};
+    extended_class(){}
     extended_class(float t_temp) : m_temp(t_temp)
-    operator std::string() {return std::to_string(t_temp);}
+
+    operator std::string() {return to_string(t_temp);}
+
+    bool operator<(const extended_class &other) const { m_temp < other.m_temp }
+
+    template <typename TemplateKlass>
+    void some_func(TemplateKlass temp) {...}
 }
 ```
 
